@@ -12,30 +12,50 @@ public class BoletoTest {
     @BeforeEach
     void setup() {
         evento = new Evento(1, "Concierto Test", "Estadio", null, null, "Artista", "Genero");
-        boleto = new Boleto(1, evento);
+        boleto = new Boleto(1, evento); // estado inicial DISPONIBLE
     }
 
+    // TC-Boleto-01
     @Test
-    void testCambioEstadoBoleto() {
+    void testCambioEstadoBoletoADisponible() {
+        boleto.setEstado(Boleto.Estado.DISPONIBLE);
+        assertEquals(Boleto.Estado.DISPONIBLE, boleto.getEstado(), "El boleto debería estar DISPONIBLE");
+    }
+
+    // TC-Boleto-02
+    @Test
+    void testCambioEstadoBoletoAReservado() {
         boleto.setEstado(Boleto.Estado.RESERVADO);
-        assertEquals(Boleto.Estado.RESERVADO, boleto.getEstado(), "El boleto debería estar en estado RESERVADO");
+        assertEquals(Boleto.Estado.RESERVADO, boleto.getEstado(), "El boleto debería estar RESERVADO");
     }
 
+    // TC-Boleto-03
     @Test
-    void testEstadoInicialDisponible() {
-        assertEquals(Boleto.Estado.DISPONIBLE, boleto.getEstado(), "El boleto recién creado debe estar DISPONIBLE");
-    }
-
-    @Test
-    void testSetEstadoVendido() {
+    void testCambioEstadoBoletoAVendido() {
         boleto.setEstado(Boleto.Estado.VENDIDO);
-        assertEquals(Boleto.Estado.VENDIDO, boleto.getEstado(), "El boleto debería estar en estado VENDIDO");
+        assertEquals(Boleto.Estado.VENDIDO, boleto.getEstado(), "El boleto debería estar VENDIDO");
     }
 
+    // TC-Boleto-04
     @Test
-    void testSetEstadoCancelado() {
+    void testCambioEstadoBoletoACancelado() {
         boleto.setEstado(Boleto.Estado.CANCELADO);
-        assertEquals(Boleto.Estado.CANCELADO, boleto.getEstado(), "El boleto debería estar en estado CANCELADO");
+        assertEquals(Boleto.Estado.CANCELADO, boleto.getEstado(), "El boleto debería estar CANCELADO");
     }
 
+    // TC-Boleto-05
+    @Test
+    void testCambiarEstadosMultiplesVeces() {
+        boleto.setEstado(Boleto.Estado.RESERVADO);
+        assertEquals(Boleto.Estado.RESERVADO, boleto.getEstado());
+
+        boleto.setEstado(Boleto.Estado.VENDIDO);
+        assertEquals(Boleto.Estado.VENDIDO, boleto.getEstado());
+
+        boleto.setEstado(Boleto.Estado.CANCELADO);
+        assertEquals(Boleto.Estado.CANCELADO, boleto.getEstado());
+
+        boleto.setEstado(Boleto.Estado.DISPONIBLE);
+        assertEquals(Boleto.Estado.DISPONIBLE, boleto.getEstado());
+    }
 }
