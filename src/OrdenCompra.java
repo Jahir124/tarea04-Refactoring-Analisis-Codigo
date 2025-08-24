@@ -13,8 +13,11 @@ public class OrdenCompra {
     }
 
     public void agregarBoleto(Boleto boleto) {
-        boletos.add(boleto);
-    }
+         boolean existe = boletos.stream().anyMatch(b -> b.getId() == boleto.getId());
+           if (!existe) {
+              boletos.add(boleto);
+              }
+     } 
 
     public int contarBoletosParaEvento(int eventoId) {
         int total = 0;
