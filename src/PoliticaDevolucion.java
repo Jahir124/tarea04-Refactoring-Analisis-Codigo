@@ -9,10 +9,12 @@ public class PoliticaDevolucion {
     }
 
     public boolean aplicarDevolucion(Date fechaCompra) {
-        long diffInMillies = new Date().getTime() - fechaCompra.getTime();
-        long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-        return diffInDays <= plazoDias;
+        if (fechaCompra == null) throw new IllegalArgumentException("fechaCompra no puede ser null");
+          long diffInMillies = new Date().getTime() - fechaCompra.getTime();
+          long diffInDays = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        return diffInDays <= plazoDias; 
     }
+
 
     public int getPlazoDias() {
         return plazoDias;
