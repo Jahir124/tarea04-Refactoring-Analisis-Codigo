@@ -34,5 +34,40 @@ public class ReservaTest {
         Thread.sleep(11 * 60 * 1000);
         assertFalse(reserva.estaActiva());
     }
+
+    @Test
+    void testReservaInicialSinBoletos() {
+        Reserva reserva = new Reserva(2, 5);
+        assertTrue(reserva.getBoletos().isEmpty(), "Una reserva recién creada no debe tener boletos");
+    }
+
+    @Test
+    void testReservaExpiradaCambiaEstadoBoletos() throws InterruptedException {
+        Reserva reserva = new Reserva(3, 0); // expira inmediato
+        Evento evento = new Evento(1, "Evento", "Lugar");
+        Boleto b1 = new Boleto(1, evento);
+        Boleto b2 = new Boleto(2, evento);
+    
+        reserva.agregarBoleto(b1);
+        reserva.agregarBoleto(b2);
+    
+        Thread.sleep(100); // pequeña espera
+        assertFalse(reserva.estaActiva());
+        assertEquals(Boleto.Estado.EXPIRADO, b1.getEstado());
+        assertEquals(Boleto.Estado.EXPIRADO, b2.getEstado());
+    }
+
+    @Test
+    void testAgregarBoletoYaReservado() {
+        Evento evento = new Evento(2, "Show", "Coliseo");
+        Boleto boleto = new Boleto(10, evento);
+        boleto.setEstado(Boleto.Estado.RESERVADO);
+    
+        Reserva reserva = new Reserva(5, 15);
+    
+        assertThrows(IllegalStateException.class, () -> reserva.agregarBoleto(boleto));
+    }
+       
+    
 }
 

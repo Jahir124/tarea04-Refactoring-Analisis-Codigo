@@ -29,4 +29,18 @@ public class PoliticaDevolucionTest {
         Date fechaCompra = cal.getTime();
         assertFalse(politica.aplicarDevolucion(fechaCompra));
     }
+
+    @Test
+    void testAplicarDevolucionConFechaNula() {
+        assertThrows(IllegalArgumentException.class, () -> politica.aplicarDevolucion(null));
+    }
+
+    @Test
+    void testDevolucionEnElLimite() {
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, -7);
+        Date fechaCompra = cal.getTime();
+        assertTrue(politica.aplicarDevolucion(fechaCompra), "En el día límite aún debe permitirse la devolución");
+    }
+    
 }

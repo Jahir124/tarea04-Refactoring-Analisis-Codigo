@@ -10,7 +10,6 @@ public class ServicioDeActualizacionDeEventos {
         for (Boleto boleto : boletos) {
             if (boleto.getEvento().getId() == evento.getId()) {
                 boleto.setEstado(Boleto.Estado.CANCELADO);
-                // Aquí crearías nuevo boleto con la nueva fecha si es necesario
             }
         }
     }

@@ -40,4 +40,27 @@ class OrdenCompraTest {
 
         assertTrue(ordenCompra.isPagado(), "La orden debería estar pagada ahora");
     }
+
+    @Test
+    void testNoPermitirBoletosDuplicados() {
+        Comprador comprador = new Comprador(1, "Ana", "ana@mail.com");
+        OrdenCompra orden = new OrdenCompra(1, comprador);
+        Evento evento = new Evento(1, "Concierto", "Teatro");
+        Boleto boleto = new Boleto(1, evento, "VIP", 120.0);
+    
+        orden.agregarBoleto(boleto);
+        orden.agregarBoleto(boleto); // intento duplicado
+    
+        assertEquals(1, orden.getBoletos().size(), "No debería aceptar boletos duplicados");
+    }
+
+    @Test
+    void testContarBoletosEnOrdenVacia() {
+        Comprador comprador = new Comprador(2, "Pedro", "pedro@mail.com");
+        OrdenCompra orden = new OrdenCompra(2, comprador);
+    
+        assertEquals(0, orden.contarBoletosParaEvento(1), "Una orden vacía no debe tener boletos");
+    }
+    
+       
 }
